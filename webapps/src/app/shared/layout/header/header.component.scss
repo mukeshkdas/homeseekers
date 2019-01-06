@@ -1,0 +1,11 @@
+.menu-spacer {
+    flex: 1 1 auto;
+  }
+  
+  mat-toolbar{
+    // min-height:64px;
+    // max-height:64px;
+    position: relative;
+    z-index: 100;    
+  }
+

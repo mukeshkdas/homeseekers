@@ -1,0 +1,42 @@
+<main fxLayout="column" fxLayoutAlign="space-around">
+  <section fxLayout='column' fxLayoutAlign="space-around center" class="register">
+    <div>
+      <div fxFlex.xs="100vw" fxFlex.sm="85vw" fxFlex.md="45vw" fxFlex.lg="30vw">
+        <form [formGroup]="form" (ngSubmit)="form.valid && submitForm()" novalidate>
+          <mat-card class="mat-elevation-z8">
+            <!-- <mat-card-header>
+                <mat-card-title>New to homeseekers.com</mat-card-title>
+                <mat-card-subtitle>Create your FREE account</mat-card-subtitle>
+            </mat-card-header> -->
+            <mat-card-content>
+              <mat-form-field class="full-width">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="fullName" placeholder="Full Name" required>
+                <mat-error align="end">Name is mandatory</mat-error>
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <mat-label>Email</mat-label>
+                <input matInput formControlName="email" placeholder="Email" required>
+                <mat-error align="end">Email is mandatory</mat-error>
+              </mat-form-field>
+              <mat-form-field class="full-width">
+                <mat-label>Mobile</mat-label>
+                <input matInput #input formControlName="mobile" placeholder="Mobile" maxlength="10" required>
+                <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
+                <mat-error align="end">Mobile is mandatory</mat-error>
+              </mat-form-field>              
+              <mat-form-field class="full-width">
+                <mat-label>Password</mat-label>
+                <input matInput type="password" formControlName="password" placeholder="Password" required>
+                <mat-error align="end">Password is mandatory</mat-error>
+              </mat-form-field>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-raised-button type="submit" color="primary">Register</button>
+            </mat-card-actions>
+          </mat-card>
+        </form>
+      </div>
+    </div>
+  </section>
+</main>

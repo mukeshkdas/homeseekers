@@ -1,0 +1,31 @@
+<mat-toolbar color="primary" class="mat-elevation-z6">
+  <mat-toolbar-row>
+    <mat-icon>home</mat-icon>&nbsp;
+    <span>homeseekers</span>
+    <span class="menu-spacer"></span>
+    <a mat-button [routerLink]="['/home']">
+      <mat-icon>reorder</mat-icon>
+      Home
+    </a>
+    <a mat-button [routerLink]="['/contact']">
+      <mat-icon>message</mat-icon>
+      Contact us
+    </a>
+    <a mat-button [routerLink]="['/listings']">
+      <mat-icon>list</mat-icon>
+      Add Listing
+    </a>
+    <a mat-button [routerLink]="['/dashboard']">
+      <mat-icon>account_box</mat-icon>
+      My Account
+    </a>
+    <a mat-button [routerLink]="['/login']">
+      <mat-icon>voicemail</mat-icon>
+      Login
+    </a>
+    <a mat-button [routerLink]="['/register']">
+      <mat-icon>dialpad</mat-icon>
+      Register
+    </a>
+  </mat-toolbar-row>
+</mat-toolbar>

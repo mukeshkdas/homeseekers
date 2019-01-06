@@ -1,15 +1,19 @@
+// Import Database Modules
 require('./config/config');
 require('./models/db');
 
+// Import Node Modules
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+// Load Routes
 const rtsIndex = require('./routes/index.router');
 
+// Load express
 var app = express();
 
-// middleware
+// Middleware
 app.use(bodyParser.json());
 app.use(cors());
 app.use('/api', rtsIndex);
@@ -24,4 +28,6 @@ app.use((err, req, res, next) => {
 });
 
 // start server
-app.listen(process.env.PORT, () => console.log(`Server started at port : ${process.env.PORT}`));
+app.listen(process.env.PORT || 3000, () => {    
+    console.log(`Server listening on port => ${process.env.PORT}`) 
+});
