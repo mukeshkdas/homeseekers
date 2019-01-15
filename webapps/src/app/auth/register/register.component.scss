@@ -1,13 +1,25 @@
-main {    
-    
+main {
+
   min-height: 80%;
   max-height: 80%;
 
-  .register {     
+  .register {         
     
-    .full-width {          
+    .full-width {
        width: 100%;
-     }
-          
-  }  
+     }          
+  } 
+  
+  .auth-msg{
+    padding-top: 10px;	
+    padding-bottom: 10px;
+  }
+  
+  .error{
+    color: red;
+  }
+  
+  .success{
+    color: #008004;
+  }
 }

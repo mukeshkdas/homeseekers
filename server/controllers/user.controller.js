@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
+const passport = require("passport");
+const _ = require("lodash");
 
+// Include model
 const User = mongoose.model("User");
 
 /* ============================================================
@@ -17,54 +20,86 @@ module.exports.register = (req, res, next) => {
     user.save((err, doc) => {
         if (!err) {
             res.send(doc); // Saved successfully
-        }
-        else {            
-            console.log(err);
-            // Error thrown           
+        } else {
             if (err.code == 11000) {
+                // Error thrown
                 res.status(422).send(["Duplicate email or mobile found."]);
-            }
-            else {
+            } else {
                 return next(err);
             }
         }
     });
-}
+};
 
 /* ============================================================
     Route to check if user's email is available for registration
   ============================================================ */
-module.exports.checkEmail = (req, res, next) => {
+module.exports.checkEmailAvailable = (req, res, next) => {
     // Search for user's e-mail in database;
     User.findOne({ email: req.params.email }, (err, user) => {
-        if (err) {
-            res.json({ success: false, message: err }); // Return connection error
-        } else {
+        if (!err) {
             // Check if user's e-mail is taken
             if (user) {
-                res.json({ success: false, message: 'E-mail is already taken' });
+                res.json({ emailAvailable: false });
             } else {
-                res.json({ success: true, message: 'E-mail is available' });
+                res.json({ emailAvailable: true });
             }
+        } else {
+            return next(err);
         }
     });
-}
+};
 
 /* ============================================================
     Route to check if user's mobile is available for registration
   ============================================================ */
-module.exports.checkMobile = (req, res, next) => {
+module.exports.checkMobileAvailable = (req, res, next) => {
     // Search for user's mobile in database;
     User.findOne({ mobile: req.params.mobile }, (err, user) => {
-        if (err) {
-            res.json({ success: false, message: err }); // Return connection error
-        } else {
-            // Check if user's mobile is taken
+        if (!err) {
             if (user) {
-                res.json({ success: false, message: 'Mobile is already taken' });
+                res.json({ mobileAvailable: false });
             } else {
-                res.json({ success: true, message: 'Mobile is available' });
+                res.json({ mobileAvailable: true });
             }
+        } else {
+            return next(err);
         }
     });
-}
+};
+
+/* ============================================================
+    Authenticate Route
+  ============================================================ */
+module.exports.authenticate = (req, res, next) => {
+    // call for passport authentication
+    passport.authenticate("local", (err, user, info) => {
+        // error from passport middleware
+        if (err) return res.status(400).json(err);
+        // registered user
+        else if (user) return res.status(200).json({ token: user.generateJwt() });
+        // unknown user or wrong password
+        else return res.status(404).json(info);
+    })(req, res);
+};
+
+/* ============================================================
+    User Profile Route
+  ============================================================ */
+module.exports.profile = (req, res, next) => {
+    User.findOne({ _id: req._id }, (err, user) => {
+        if (!err) {
+            if (!user)
+                return res
+                    .status(404)
+                    .json({ status: false, message: "User record not found." });
+            else
+                return res
+                    .status(200)
+                    .json({ status: true, user: _.pick(user, ["name", "email"]) });
+        } else {
+            return next(err);
+        }
+    });
+};
+

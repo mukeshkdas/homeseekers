@@ -1,5 +1,6 @@
 // check env.
 var env = process.env.NODE_ENV || 'development';
+console.log("Environment: " + env);
 
 // fetch env. config
 var config = require('./config.json');
@@ -14,3 +15,4 @@ Object.keys(envConfig).forEach(key => process.env[key] = envConfig[key]);
 // provides cryptographic functionality (OpenSSL's hash, HMAC, cipher, decipher, sign and verify functions)
 const cryptoSecretKey = require('crypto').randomBytes(256).toString('hex'); 
 process.env["JWT_SECRET"] = cryptoSecretKey || process.env["JWT_SECRET"];
+console.log("JWT SECRET KEY: " + cryptoSecretKey);

@@ -1,38 +1,72 @@
 <main fxLayout="column" fxLayoutAlign="space-around">
   <section fxLayout='column' fxLayoutAlign="space-around center" class="register">
     <div>
-      <div fxFlex.xs="100vw" fxFlex.sm="85vw" fxFlex.md="45vw" fxFlex.lg="30vw">
-        <form [formGroup]="form" (ngSubmit)="form.valid && submitForm()" novalidate>
+      <div fxFlex.xs="85vw" fxFlex.sm="65vw" fxFlex.md="45vw" fxFlex.lg="45vw">
+        <form [formGroup]="registratonForm" (ngSubmit)="onRegisterSubmit()" novalidate>
           <mat-card class="mat-elevation-z8">
-            <!-- <mat-card-header>
-                <mat-card-title>New to homeseekers.com</mat-card-title>
-                <mat-card-subtitle>Create your FREE account</mat-card-subtitle>
-            </mat-card-header> -->
+            <app-list-errors [errors]="errors"></app-list-errors>
+            <mat-card-header>
+              <mat-card-title>
+                Create your free account
+              </mat-card-title>
+            </mat-card-header>
             <mat-card-content>
               <mat-form-field class="full-width">
                 <mat-label>Name</mat-label>
-                <input matInput formControlName="fullName" placeholder="Full Name" required>
-                <mat-error align="end">Name is mandatory</mat-error>
+                <input matInput formControlName="name" name="name" placeholder="Full Name" type="text" autocomplete="off"
+                  required>
+                <mat-error align="end" *ngIf="f['name'].errors?.required && f['name'].invalid && (f['name'].dirty || f['name'].touched)">Name
+                  is required.</mat-error>
+                <mat-error align="end" *ngIf="f['name'].errors?.minlength && f['name'].invalid && (f['name'].dirty || f['name'].touched)">Name
+                  must be at least 3 characters long</mat-error>
+                <mat-error align="end" *ngIf="f['name'].errors?.maxlength && f['name'].invalid && (f['name'].dirty || f['name'].touched)">Name
+                  must not exceed 30 characters</mat-error>
+                <mat-error align="end" *ngIf="f['name'].errors?.pattern && f['name'].invalid && (f['name'].dirty || f['name'].touched)">Please
+                  enter a valid name</mat-error>
               </mat-form-field>
               <mat-form-field class="full-width">
-                <mat-label>Email</mat-label>
-                <input matInput formControlName="email" placeholder="Email" required>
-                <mat-error align="end">Email is mandatory</mat-error>
+                <mat-label>E-mail</mat-label>
+                <input matInput formControlName="email" placeholder="Email (your username)" type="email" autocomplete="off"
+                  required>
+                <mat-error align="end" *ngIf="f['email'].errors?.required && f['email'].invalid && (f['email'].dirty || f['email'].touched)">E-mail
+                  is required</mat-error>
+                <mat-error align="end" *ngIf="f['email'].errors?.minlength && f['email'].invalid && (f['email'].dirty || f['email'].touched)">E-mail
+                  must be at least 6 characters long</mat-error>
+                <mat-error align="end" *ngIf="f['email'].errors?.maxlength && f['email'].invalid && (f['email'].dirty || f['email'].touched)">E-mail
+                  must not exceed 30 characters</mat-error>
+                <mat-error align="end" *ngIf="f['email'].errors?.pattern && f['email'].invalid && (f['email'].dirty || f['email'].touched)">
+                  Invalid E-mail</mat-error>
+                <mat-error align="end" *ngIf="f['email'].errors?.emailTaken">E-mail already registered</mat-error>
               </mat-form-field>
               <mat-form-field class="full-width">
                 <mat-label>Mobile</mat-label>
-                <input matInput #input formControlName="mobile" placeholder="Mobile" maxlength="10" required>
+                <input matInput #input formControlName="mobile" placeholder="Mobile number" maxlength="10" autocomplete="off"
+                  type="text" required>
                 <mat-hint align="end">{{input.value?.length || 0}}/10</mat-hint>
-                <mat-error align="end">Mobile is mandatory</mat-error>
-              </mat-form-field>              
+                <mat-error align="end" *ngIf="f['mobile'].errors?.required && f['mobile'].invalid && (f['mobile'].dirty || f['mobile'].touched)">
+                  Mobile is required</mat-error>
+                <mat-error align="end" *ngIf="f['mobile'].errors?.minlength || f['mobile'].errors?.maxlength && f['mobile'].invalid && (f['mobile'].dirty || f['mobile'].touched)">Mobile
+                  must be exact 10 digits</mat-error>
+                <mat-error align="end" *ngIf="f['mobile'].errors?.pattern && f['mobile'].invalid && (f['mobile'].dirty || f['mobile'].touched)">Invalid
+                  mobile number</mat-error>
+                <mat-error align="end" *ngIf="f['mobile'].errors?.mobileTaken">Mobile already registered</mat-error>
+              </mat-form-field>
               <mat-form-field class="full-width">
                 <mat-label>Password</mat-label>
-                <input matInput type="password" formControlName="password" placeholder="Password" required>
-                <mat-error align="end">Password is mandatory</mat-error>
+                <input matInput formControlName="password" placeholder="Password" type="password" autocomplete="off"
+                  required>
+                <mat-error align="end" *ngIf="f['password'].errors?.required && f['password'].invalid && (f['password'].dirty || f['password'].touched)">Password
+                  is required</mat-error>
+                <mat-error align="end" *ngIf="f['password'].errors?.minlength && f['password'].invalid && (f['password'].dirty || f['password'].touched)">Password
+                  must be at least 6 characters</mat-error>
+                <mat-error align="end" *ngIf="f['password'].errors?.maxlength && f['password'].invalid && (f['password'].dirty || f['password'].touched)">Password
+                  must not exceed 15 characters</mat-error>
+                <mat-error align="end" *ngIf="f['password'].errors?.pattern&& f['password'].invalid && (f['password'].dirty || f['password'].touched)">Enter
+                  a strong password</mat-error>
               </mat-form-field>
             </mat-card-content>
             <mat-card-actions>
-              <button mat-raised-button type="submit" color="primary">Register</button>
+              <button mat-raised-button type="submit" color="primary" [disabled]="isSubmitting">Register</button>
             </mat-card-actions>
           </mat-card>
         </form>

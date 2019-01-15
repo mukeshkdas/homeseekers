@@ -2,56 +2,39 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { FlexLayoutModule } from "@angular/flex-layout";
-
+//import { FlexLayoutModule } from "@angular/flex-layout";
+//import { HttpClientModule } from '@angular/common/http';
 // Need to remove below import on creating the feature auth module
-import { FormsModule } from "@angular/forms";
-import { ReactiveFormsModule } from "@angular/forms";
-
+//import { FormsModule } from "@angular/forms";
+//import { ReactiveFormsModule } from "@angular/forms";
 // custom modules
-import { MaterialModule } from "./material.module";
-import { HomeModule } from './home';
-import { AppRoutingModule } from "./app-routing.module";
-import { SharedModule } from './shared';
+import { AppRoutingModule } from "@app/app-routing.module";
+//import { MaterialModule } from "./material.module";
+import { SharedModule } from "@app/shared";
+import { CoreModule } from "@app/core";
+import { HomeModule } from "@app/home";
+import { AuthModule } from "@app/auth";
 // components
 import { AppComponent } from "./app.component";
-import { FooterComponent, HeaderComponent } from './shared';
-import { AuthComponent, LoginComponent, RegisterComponent } from './auth';
-// import { HomeComponent } from './home';
-// import { ToolbarComponent } from './toolbar';
-// import { LoginComponent } from './login';
-// import { RegisterComponent } from './register';
-// import { ContactUsComponent } from './contact-us';
-// import { DashboardComponent } from './dashboard';
-// import { ListingsComponent } from './listings';
+import { FooterComponent, HeaderComponent } from "@app/shared";
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    // HomeComponent,
-    // ToolbarComponent,
-    LoginComponent,
-    RegisterComponent,
-    AuthComponent,
-    // ContactUsComponent,
-    // DashboardComponent,
-    // ListingsComponent,
-    HeaderComponent,
-    FooterComponent,
-    AuthComponent
-  ],
+@NgModule({ 
+  declarations: [AppComponent, HeaderComponent, FooterComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    FormsModule,
-    ReactiveFormsModule,
-    FlexLayoutModule,
-    MaterialModule,    
+    // FormsModule,
+    // ReactiveFormsModule,
+    // HttpClientModule,
+    // FlexLayoutModule,
+    // MaterialModule,
     AppRoutingModule,
+    CoreModule,
     SharedModule,
+    AuthModule,
     HomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
